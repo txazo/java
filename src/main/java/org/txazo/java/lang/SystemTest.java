@@ -7,7 +7,7 @@ public class SystemTest extends AbstractTest {
 
     /**
      * System.identityHashCode()
-     * <p/>
+     * <p>
      * 返回的值和默认的Object的hashCode()的返回值一样
      */
     @Test

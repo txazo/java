@@ -5,6 +5,6 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractTest {
 
-    protected final Logger LOG = LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 }

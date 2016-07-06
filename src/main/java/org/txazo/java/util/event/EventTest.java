@@ -12,7 +12,7 @@ public class EventTest extends AbstractTest {
 
             @Override
             public void valueChanged(ValueEvent event) {
-                LOG.info("Value changed to " + event.getSource());
+                logger.info("Value changed to " + event.getSource());
             }
 
         });
