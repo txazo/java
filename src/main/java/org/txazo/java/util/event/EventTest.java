@@ -1,7 +1,7 @@
 package org.txazo.java.util.event;
 
 import org.junit.Test;
-import org.txazo.java.test.AbstractTest;
+import org.txazo.test.AbstractTest;
 
 public class EventTest extends AbstractTest {
 

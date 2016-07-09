@@ -1,7 +1,7 @@
 package org.txazo.java.lang;
 
 import org.junit.Test;
-import org.txazo.java.test.AbstractTest;
+import org.txazo.test.AbstractTest;
 
 public class SystemTest extends AbstractTest {
 
@@ -14,8 +14,8 @@ public class SystemTest extends AbstractTest {
     public void testIdentityHashCode() {
         Object o = new Object();
         HashCode h = new HashCode();
-        LOG.info("{} {}", o.hashCode(), System.identityHashCode(o));
-        LOG.info("{} {}", h.hashCode(), System.identityHashCode(h));
+        logger.info("{} {}", o.hashCode(), System.identityHashCode(o));
+        logger.info("{} {}", h.hashCode(), System.identityHashCode(h));
     }
 
     private static class HashCode {

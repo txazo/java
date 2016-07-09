@@ -1,4 +1,4 @@
-package org.txazo.java.test;
+package org.txazo.test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
