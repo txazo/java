@@ -2,7 +2,7 @@ package org.txazo.designpattern.creational.prototype.serializable;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.txazo.java.util.lang.CloneUtils;
+import org.txazo.tool.util.CloneUtils;
 
 /**
  * 序列化实现深度克隆

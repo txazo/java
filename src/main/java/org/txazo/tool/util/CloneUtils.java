@@ -1,4 +1,4 @@
-package org.txazo.java.util.lang;
+package org.txazo.tool.util;
 
 import org.apache.commons.io.IOUtils;
 
