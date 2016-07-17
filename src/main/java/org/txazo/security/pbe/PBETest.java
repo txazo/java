@@ -2,7 +2,7 @@ package org.txazo.security.pbe;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.txazo.security.cipher.CipherUtils;
+import org.txazo.security.common.CipherUtils;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

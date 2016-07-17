@@ -1,6 +1,6 @@
 package org.txazo.security.rsa;
 
-import org.txazo.security.cipher.CipherUtils;
+import org.txazo.security.common.CipherUtils;
 import org.txazo.security.key.Key;
 import org.txazo.security.key.KeyBuilder;
 

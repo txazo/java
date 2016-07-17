@@ -1,4 +1,4 @@
-package org.txazo.security.cipher;
+package org.txazo.security.common;
 
 import org.apache.commons.codec.binary.Hex;
 

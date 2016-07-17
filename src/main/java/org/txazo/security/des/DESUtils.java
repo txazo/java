@@ -1,7 +1,7 @@
 package org.txazo.security.des;
 
 import org.apache.commons.codec.binary.Hex;
-import org.txazo.security.cipher.CipherUtils;
+import org.txazo.security.common.CipherUtils;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;

@@ -1,7 +1,7 @@
 package org.txazo.security.aes;
 
 import org.apache.commons.codec.binary.Hex;
-import org.txazo.security.cipher.CipherUtils;
+import org.txazo.security.common.CipherUtils;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
