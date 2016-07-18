@@ -1,7 +1,6 @@
 package org.txazo.security.hex;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,13 +17,9 @@ public class HexTest {
     private String cipherText = "736563757269747920686578";
 
     @Test
-    public void testCodecHex() throws DecoderException {
-        /** 十六机制编码 */
-        String encryptText = Hex.encodeHexString(plainText.getBytes());
+    public void testHex() throws DecoderException {
+        String encryptText = HexUtils.encodeHexString(plainText.getBytes());
         Assert.assertEquals(cipherText, encryptText);
-        /** 十六机制解码 */
-        String decryptText = new String(Hex.decodeHex(encryptText.toCharArray()));
-        Assert.assertEquals(plainText, decryptText);
 
     }
 

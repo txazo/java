@@ -3,6 +3,8 @@ package org.txazo.security.base64;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class Base64Test {
 
     // 明文
@@ -11,9 +13,9 @@ public class Base64Test {
     private String cipherText = "c2VjdXJpdHkgYmFzZTY0";
 
     @Test
-    public void testBase64() throws Exception {
+    public void testBase64() throws IOException {
         Assert.assertEquals(cipherText, Base64Utils.encode(plainText.getBytes()));
-        Assert.assertEquals(plainText, new String(Base64Utils.decode(cipherText)));
+        Assert.assertArrayEquals(plainText.getBytes(), Base64Utils.decode(cipherText));
     }
 
 }
