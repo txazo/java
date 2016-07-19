@@ -71,11 +71,6 @@
             <artifactId>commons-codec</artifactId>
             <version>1.10</version>
         </dependency>
-        <dependency>
-            <groupId>org.txazo</groupId>
-            <artifactId>txazo-java</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
 
     <build>
