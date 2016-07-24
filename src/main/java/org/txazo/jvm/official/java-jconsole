@@ -1,0 +1,25 @@
+jconsole
+
+jconsole 1965
+jconsole 127.0.0.1:8787
+
+-Dcom.sun.management.jmxremote
+-Dcom.sun.management.jmxremote.port=8787
+
+----------**********< JConsole功能 >**********----------
+1. 概览
+   堆内存使用量
+   线程
+   类
+   CPU占用率
+2. 内存(JKD8)
+   Eden Space(堆内存)
+   Survivor Space(堆内存)
+   Old Gen(堆内存)
+   Metaspace(非堆内存)
+   Code Cache(非堆内存)
+   Compressed Class Space(非堆内存)
+3. 线程
+4. 类
+5. VM概要
+6. MBean

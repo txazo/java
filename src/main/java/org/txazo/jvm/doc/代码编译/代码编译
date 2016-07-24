@@ -1,0 +1,35 @@
+代码编译: javac编译器
+
+编译过程:
+1) 解析与填充符号表
+    1) 词法、语法分析
+    2) 填充符号表
+2) 注解处理
+3) 语义分析与字节码生成
+    1) 标注检查
+    2) 数据及控制流分析
+    3) 解语法糖
+    4) 字节码生成
+
+源代码 - 词法分析器 - Token流 - 语法分析器 - 语法树/抽象语法树 - 语义分析器 - 注解抽象语法树 - 字节码生成器 - JVM字节码
+
+JIT编译优化
+1) 内联
+
+JIT编译器(即时编译器)
+1) C1编译器(Client Compiler) -client
+2) C2编译器(Server Compiler) -server
+
+java (mixed mode)
+java -Xint (interpreted mode)
+java -Xcomp (compiled mode)
+
+热点代码
+1) 被多次调用的方法
+2) 被多次执行的循环体
+3) -XX:CompileThreshold
+
+方法内联
+
+解释器
+编译器

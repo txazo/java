@@ -1,0 +1,56 @@
+[compile］
+.java >> .class
+
+[compile]
+1. 静态编译: javac
+2. 动态编译: JIT
+
+[gc]
+young gen | eden | from survivor | to survivor
+old gen
+perm  gen
+
+
+TLAB(Thread Local Allocation Buffer)
+
+碎片
+
+
+[gc标记]
+引用
+
+[gc算法]
+年轻代
+年老代
+
+[JVM内存模型]
+1. 程序计数器 [线程]
+    Java方法: 字节码指令的地址
+    Native方法: 空
+2. Java虚拟机栈 [线程]
+    方法 - 栈帧(局部变量表 操作数栈 动态链接 方法返回)
+    StackOverflowError
+    OutOfMemoryError
+3. 本地方法栈
+    StackOverflowError
+    OutOfMemoryError
+4. Java堆 [共享]
+    对象实例
+    新生代
+        Eden Space、From Survivor Space、To Survivor Space、Tenured Space
+        -Xmx -Xms
+    老年代
+    OutOfMemoryError
+5. 方法区 [共享]
+    OutOfMemoryError
+6. 运行时常量池
+    方法区的一部分
+7. 直接内存
+    对象访问: 句柄、直接指针
+
+内存泄露
+内存溢出
+
+[垃圾回收]
+Young gc
+Full GC

@@ -1,0 +1,9 @@
+静态编译器(javac): java代码(.java) - 字节码(.class)
+
+执行java: java
+
+JVM
+1) 执行引擎
+2) JIT编译器
+3) 内存模型(内存分配)
+4) 垃圾回收: GC算法

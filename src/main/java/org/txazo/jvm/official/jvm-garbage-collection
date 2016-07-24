@@ -1,0 +1,190 @@
+********************< Garbage Collection >********************
+垃圾收集: Garbage Collection(GC)
+1. 哪些内存要回收
+2. 什么时候回收
+3. 如何回收
+
+1. 分配对象到新生代, 晋升年老对象到老年代
+2. 堆内存占用达到临界值, 触发对老年代中存活对象的并行标记
+3. 并行复制并压缩存活对象, 释放空闲内存
+
+********************< 回收哪些内存 >********************
+1. 回收哪些内存: 不再存活的对象
+2. 判定对象是否存活:
+   1) 引用计数算法: 给对象添加一个引用计数器, 每引用一次加1, 引用失效减1, 计数器为0就可回收
+      缺点: 无法解决循环引用的问题
+   2) 可达性分析算法(JVM): 以GC Roots的对象作为起始点, 向下搜索, 搜索不到的对象就可回收
+      GC Roots: 虚拟机栈(栈帧中的本地变量表)中引用的对象
+                方法区中类静态变量引用的对象
+                方法区中常量引用的对象
+                本地方法栈(JNI)中引用的对象
+
+********************< 回收的目标 >********************
+1. 释放不再使用的内存, 满足应用程序内存分配, 避免内存溢出
+2. 回收内存时, 尽量减小对正在运行的应用程序性能(吞吐量、停顿时间)的影响
+
+********************< 如何回收 - 垃圾收集算法 >********************
+1. 标记清除算法: 标记 - 回收
+   缺点: 产生内存碎片
+2. 复制算法:
+   缺点: 额外的内存空间
+        stop the world
+3. 标记整理算法: 标记 - 整理
+4. 分代收集算法:
+   1) 新生代: 复制算法
+   2) 老年代: 标记 - 清除算法、标记 - 整理算法
+
+********************< 如何回收 - 垃圾收集器 >********************
+1. 新生代收集器:
+   Serial收集器、ParNew收集器、Parallel Scavenge收集器、G1收集器
+2. 老年代收集器:
+   Serial Old收集器、Parallel Old收集器、CMS收集器、G1收集器
+
+1. 单线程收集器
+   Serial收集器、Serial Old收集器
+2. 多线程收集器
+   ParNew收集器、Parallel Scavenge收集器、Parallel Old收集器、CMS收集器、G1收集器
+
+1. 串行收集器
+   Serial收集器、Serial Old收集器
+2. 并行收集器
+   ParNew收集器、Parallel Scavenge收集器、Parallel Old收集器
+3. 并发收集器
+   CMS收集器、G1收集器
+
+1. Serial收集器
+   1) 串行收集器, 复制算法, -XX:+UseSerialGC
+   2) Stop The World: 暂停其他所有的工作线程
+   3) Client模式下默认的新生代收集器, 单CPU环境下收集效率最高
+2. Serial Old收集器
+   1) 串行收集器, 标记 - 整理算法, -XX:+UseSerialGC
+   2) Stop The World
+   3) Client模式下默认的老年代收集器, 单CPU环境下收集效率最高
+   4) CMS回收失败的备用收集器
+3. ParNew收集器
+   1) 并行收集器, 复制算法, -XX:+UseParNewGC
+   2) Stop The World
+   3) Server模式下首选的新生代收集器
+   4) 垃圾收集线程数: -XX:ParallelGCThreads=n(默认为CPU的数量)
+4. Parallel Scavenge收集器
+   1) 并行收集器, 复制算法, -XX:+UseParallelGc
+   2) Stop The World
+   3) 吞吐量优先
+   4) -XX:GCTimeRatio=99
+      -XX:MaxGCPauseMills=1000
+5. Parallel Old收集器
+   1) 并行收集器, 标记 - 整理算法, -XX:+UseParallelOldGC
+   2) Stop The World
+   3) 吞吐量优先
+   4) -XX:GCTimeRatio=99
+         -XX:MaxGCPauseMills=1000
+6. CMS收集器(Concurrent Mark Sweep)
+   1) 并发收集器, 标记 - 清除算法, －XX:+UseConcMarkSweepGC
+   2) 停顿时间优先
+   3) 回收过程:
+      1) 初始标记: 串行, Stop The World
+      2) 并发标记: 并发
+      3) 重新标记: 并行, Stop The World
+      4) 并发清除: 并发
+   4) 缺点:
+      1) CPU资源敏感
+         默认垃圾收集线程数: (ParallelGCThreads + 3) / 4
+         -XX:ConcGCThreads=4
+      2) 无法处理浮动垃圾: 预留足够的内存空间给用户线程使用, 预留的内存不够, 出现Concurrent Mode Failure, 触发Full GC
+         -XX:CMSInitiatingOccupancyFraction=90
+      3) 内存碎片: 可能导致大对象内存分配失败, 触发Full GC
+         －XX:+UseCMSCompactAtFullCollection
+         －XX:CMSFullGCsBeforeCompaction=10(默认为0)
+7. G1收集器(Garbage First)
+   1) 并发收集器, 标记 - 整理算法, -XX:+UseG1GC
+   2) Java堆(新生代、老年代)划分为多个大小相等的独立区域(Region)
+   3) 可预测的停顿时间
+   4) 回收过程
+      1) 初始标记: 串行, Stop The World
+      2) 并发标记: 并发
+      3) 最终标记: 并行, Stop The World
+      4) 筛选回收: 并行, Stop The World
+
+********************< GC日志 >********************
+
+********************< 内存分配与回收 >********************
+1. 对象优先在Eden分配
+2. 大对象直接进入老年代
+3. 长期存活的对象进入老年代
+4. 空间分配担保
+
+********************< GC调优 >********************
+
+********************< 默认选项 >********************
+1. 垃圾收集器
+2. 堆内存大小
+3. 运行时编译器
+
+-XX:MaxGCPauseMillis=500
+-XX:GCTimeRatio=20
+
+young generation(minor GC)
+    eden space
+    survivor from space
+    survivor to space
+tenured generation(major GC/Full GC)
+
+并行垃圾收集器
+吞吐量垃圾收集器
+
+********************< 垃圾收集的性能指标 >********************
+1. 吞吐量(程序运行的百分比)
+2. 垃圾收集停顿时间
+3. 垃圾收集频率
+
+-verbose:gc
+-XX:+PrintGCDetails
+-XX:+PrintGCTimeStamps
+
+-Xmx4G
+-Xms4G
+-XX:MinHeapFreeRatio=40
+-XX:MaxHeapFreeRatio=70
+-XX:NewRatio=3(default)
+-XX:NewSize=1G
+-XX:MaxNewSize=1G
+-XX:SurvivorRatio=8(default)
+-XX:PrintTenuringDistribution
+-XX:+PrintFlagsFinal
+
+********************< 垃圾收集器 >********************
+1. 串行收集器
+    -XX:+UseSerialGC
+2. 并行收集器(吞吐量收集器)
+    -XX:+UseParallelGC
+3. 并发收集器
+    -XX:+UseG1GC(G1)
+    -XX:+UseConcMarkSweepGC(CMS)
+
+********************< 垃圾收集器选择 >********************
+1. －Xmx < 100M, -XX:+UseSerialGC
+2. 单CPU, -XX:+UseSerialGC
+3. 吞吐量优先, -XX:+UseParallelGC
+4. 响应时间优先, -XX:+UseG1GC或-XX:+UseConcMarkSweepGC
+
+********************< 并行垃圾收集器 >********************
+1. -XX:+UseParallelGC
+   minor gc: 并行
+   minor gc: 并行
+2. -XX:ParallelGCThreads=8
+3. -XX:MaxGCPauseMillis=1000
+4. -XX:GCTimeRatio=99(default)
+5. 目标
+    1) 最大停顿时间
+    2) 吞吐量
+    3) 最小化内存占用
+
+********************< 并发垃圾收集器 >********************
+1. G1、CMS
+2. 低停顿时间高吞吐量
+
+********************< 类元数据(Class Metadata) >********************
+1. 本机内存(JDK 8)
+   －XX:MaxMetaspaceSize=128M
+2. metadata
+       chunk - ClassLoader

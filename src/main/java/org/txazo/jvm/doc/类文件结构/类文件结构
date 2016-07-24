@@ -1,0 +1,39 @@
+类文件结构: class
+
+类型             名称                    变量
+u4 	            magic 	                1
+u2 	            minor_version 	        1
+u2      	    major_version 	        1
+u2      	    constant_pool_count 	1
+cp_info 	    constant_pool 	        constant_pool_count-1
+u2 	            access_flags 	        1
+u2 	            this_class 	            1
+u2 	            super_class 	        1
+u2 	            interfaces_count 	    1
+u2 	            interfaces 	            interfaces_count
+u2 	            field_count 	        1
+field_info 	    fields 	                field_count
+u2 	            method_count 	        1
+method_info 	methods 	            method_count
+u2 	            attribute_count 	    1
+attribute_info 	attributes 	            attribte_count
+
+1) 魔数(magic): 标识class文件
+
+2) 版本号(minor_version major_version): 高版本号的JDK可以向下兼容
+
+3) 常量池(constant_pool_count constant_pool): 从1开始, 存放字面量和符号引用
+
+4) 访问标志(access_flags)
+
+5) 类父类接口(this_class super_class interfaces_count interfaces)
+
+6) 字段表(field_count fields): 接口或类中声明的变量
+
+7) 方法表(method_count methods)
+
+8) 属性表(attribute_count attributes)
+
+方法特征签名: 方法名 + 方法参数顺序 + 方法参数类型, 不包含方法返回值类型, Class文件中, 方法特征签名包含方法返回值类型
+
+反编译工具: javap -v

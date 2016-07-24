@@ -1,0 +1,4 @@
+jmap
+
+jmap -heap 28302
+jmap -histo:live <pid>

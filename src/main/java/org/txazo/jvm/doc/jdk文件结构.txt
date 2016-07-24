@@ -1,0 +1,18 @@
+/bin: 开发工具, PATH
+    java
+    javac
+    javap
+    javah
+    javadoc
+/lib: JDK jar
+    tools.jar
+    dt.jar
+/jre: JRE
+    /bin
+        java
+    /lib: JRE jar
+        /ext
+        /security
+        rt.jar
+src.zip JDK源码
+

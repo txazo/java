@@ -1,0 +1,81 @@
+[JVM Args]
+1. 标准参数, java
+2. -X参数, java -X
+3. -XX参数, java
+
+[VM Type]
+-client | -server
+
+[VM Version]
+-version | -showversion
+
+[VM Compile Type]
+-Xint | -Xcomp | -Xmixed
+
+[PrintCompilation]
+-XX:+PrintCompilation
+
+[Compile Time]
+-XX:+CITime
+
+[Print -XX Args]
+-XX:+PrintFlagsFinal | -XX:+PrintFlagsInitial
+
+[Print Setted VM Args]
+-XX:+PrintCommandLineFlags
+
+[Set Heap Size]
+-Xmx256M -Xms256M
+-XX:InitialHeapSize=256M -XX:MaxHeapSize=256M
+
+[Set Young Generation Size]
+-Xmn128M
+-XX:NewRatio=3 (Old Gen / Young Gen = 3)
+-XX:SurvivorRatio=8 (Eden / From Survivor = 8)
+
+[Set Thread Stack Size]
+-Xss256K
+
+[Set Perm Size] (<= JDK7)
+-XX:PermSize=128M
+-XX:MaxPermSize=256M
+
+[VM Metaspace Size] (JDK8)
+-XX:MetaspaceSize
+-XX:MaxMetaspaceSize=32M
+
+[GC]
+-XX:MaxTenuringThreshold=20
+
+[HeapDump On OutOfMemory]
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=<path>
+
+[When OutOfMemory Execute]
+-XX:OnOutOfMemoryError="sh ~/notify.sh"
+
+[Set Code Cache Size]
+-XX:InitialCodeCacheSize=128M -XX:ReservedCodeCacheSize=256M
+-XX:+UseCodeCacheFlushing
+
+[Disable System.gc()]
+-XX:+DisableExplicitGC
+
+[Enable Detail Output]
+-verbose:[class|gc|jni]
+
+[Log GC Info To File]
+-Xloggc:<file>
+
+[Open Remote JMX]
+-Dcom.sun.management.jmxremote
+-Dcom.sun.management.jmxremote.port=4000
+-Dcom.sun.management.jmxremote.authenticate="false"
+-Dcom.sun.management.jmxremote.ssl="false"
+-Djava.rmi.server.hostname=127.0.0.1
+
+[Set Inline Threshold]
+-XX:MaxInlineSize=100
+‑XX:FreqInlineSize=100000
+
+[GC]

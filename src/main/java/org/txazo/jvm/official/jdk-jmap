@@ -1,0 +1,4 @@
+jmap
+
+jmap -histo 1956 > jmap.log
+jmap -dump:format=b,file=jmap.log 3024

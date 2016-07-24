@@ -1,0 +1,166 @@
+http://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/
+http://docs.oracle.com/javase/specs/jvms/se8/html/index.html
+http://docs.oracle.com/javase/8/docs/technotes/guides/vm/index.html
+http://www.oracle.com/technetwork/java/javase/tech/index-jsp-136373.html
+http://docs.oracle.com/javase/8/
+
+http://docs.oracle.com/javase/8/docs/technotes/guides/management/index.html
+http://docs.oracle.com/javase/8/docs/technotes/guides/management/jconsole.html
+http://docs.oracle.com/javase/8/docs/technotes/tools/index.html
+
+********************< 类文件结构 >********************
+ClassFile {
+    u4             magic;
+    u2             minor_version;
+    u2             major_version;
+    u2             constant_pool_count;
+    cp_info        constant_pool[constant_pool_count-1];
+    u2             access_flags;
+    u2             this_class;
+    u2             super_class;
+    u2             interfaces_count;
+    u2             interfaces[interfaces_count];
+    u2             fields_count;
+    field_info     fields[fields_count];
+    u2             methods_count;
+    method_info    methods[methods_count];
+    u2             attributes_count;
+    attribute_info attributes[attributes_count];
+}
+
+
+********************< 数据类型 >********************
+1. 基本数据类型
+    byte        1字节     -128 ~ 127
+    short       2字节     -32768 ~ 32767
+    int         4字节     -2147483648 ~ 2147483647
+    long        8字节     -9223372036854775808 ~ 9223372036854775807
+    char        2字节     0 ~ 65535
+    float       4字节
+    double      8字节
+    boolean     1字节     0 ~ 1
+2. 引用类型(null)
+    类类型
+    接口类型
+    数组类型
+
+
+********************< 运行时数据区 >********************
+1. 程序计数器(线程)
+2. Java虚拟机栈(线程) - 栈帧(局部变量、)
+    StackOverflowError
+    OutOfMemoryError
+3. 堆
+    类实例和数组分配内存
+    垃圾收集器
+    OutOfMemoryError
+4. 方法区(堆 - 永久代)
+    存放类结构: 运行时常量池、字段、方法、方法和构造器的代码、特殊方法
+    OutOfMemoryError
+5. 运行时常量池(方法区)
+    符号表
+    每个类或接口的类文件结构中常量池的运行时表示
+    编译时可知的数字字面值、运行时确定的字段引用
+    类装载时创建
+    OutOfMemoryError
+6. 本地方法栈(线程)
+    StackOverflowError
+    OutOfMemoryError
+
+
+********************< 栈帧(方法) >********************
+动态链接、方法返回值、异常调度
+1. 局部变量(表): 大小在编译时写入到方法代码中
+    方法参数、局部变量
+    索引: 0 ~ size - 1
+    非静态方法: array[0]为this
+    2字节: 基本数据类型、引用类型、返回类型(returnAddress)
+    4字节: long、double
+2. 操作数栈
+    LIFO(后进先出)
+    大小在编译时写入到方法代码中
+    加载局部变量表或变量的值到操作数栈的指令
+    操作数栈操作指令(操作, 结果压入操作数栈)
+    准备方法调用传参、接收方法返回值
+3. 动态链接
+    当前方法在运行时常量池的引用
+4. 方法调用正常返回
+5. 方法调用异常返回
+
+
+********************< 特殊方法 >********************
+1. <init>
+2. <clinit>
+
+
+********************< 异常 >********************
+
+
+********************< 指令集 >********************
+
+
+********************< 类库 >********************
+1. 反射: java.lang.reflect、Class
+2. 类或接口的装载和创建:  ClassLoader
+3. 类或接口的链接和初始化
+4. 安全: java.security、SecurityManager
+5. 多线程: Thread
+6. 弱引用: java.lang.ref
+
+
+********************< Java虚拟机编译 >********************
+1. javap
+   javap -v
+2. 虚拟机指令: <index> <opcode> [ <operand1> [ <operand2>... ]] [<comment>]
+   说明: 指令索引 虚拟机指令 操作数 注释
+   #n 常量池索引n
+   eg: 8   bipush 100     // Push int constant 100
+
+
+********************< 加载、链接、初始化 >********************
+1. 加载: 根据类名查找类的二进制表示(class格式), 并创建Class
+   类加载器加载二进制表示
+   ClassNotFoundException
+   NoClassDefFoundError
+2. 链接: 转换类为虚拟机的运行时状态
+3. 初始化: 类初始化, 执行方法<cinit>
+4. 虚拟机启动过程
+   启动类加载器加载、链接、初始化InitialClass
+   InitialClass中调用MainClass的main()方法, 触发所有后续执行
+   后续执行, 触发链接、初始化其它的类, 调用其它类的方法
+
+
+********************< Java虚拟机指令集 >********************
+
+
+********************< add >********************
+1. Java HotSpot Client VM(java -client)
+   Java HotSpot Server VM(java -server)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
