@@ -1,0 +1,12 @@
+stop in Test.method()
+run Main
+
+universe
+
+scanoops 0x00000000fa400000 0x00000000fc2c0000 Test2
+
+whatis 0x00000000fa400000
+
+inspect 0x00000000fa400000
+
+mem 0x0000000161dd1630
