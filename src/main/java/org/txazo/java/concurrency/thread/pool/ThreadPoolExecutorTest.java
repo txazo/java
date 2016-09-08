@@ -5,6 +5,8 @@ import org.junit.Test;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Set;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -49,6 +51,18 @@ public class ThreadPoolExecutorTest {
         }));
     }
 
+    @Test
+    public void test() throws Exception {
+        testThreadPool(1000, 20, 1000, 20000, new ThreadPoolExecutor(5, 10, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5), new RejectedExecutionHandler() {
+
+            @Override
+            public void rejectedExecution(Runnable r, ThreadPoolExecutor e) {
+                System.out.println("[" + getTime() + "] " + r.toString() + " rejected");
+            }
+
+        }));
+    }
+
     private static void testThreadPool(int monitorIntervalTime, int threadCount, int threadIntervalTime, final int threadSleepTime, ThreadPoolExecutor threadPool) throws Exception {
         new Thread(new ThreadPoolExecutorMonitor(monitorIntervalTime, threadPool)).start();
 
@@ -58,9 +72,7 @@ public class ThreadPoolExecutorTest {
                 @Override
                 public void run() {
                     try {
-                        if (threadSleepTime > 0) {
-                            Thread.sleep(threadSleepTime);
-                        }
+                        Thread.sleep(threadSleepTime);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -68,9 +80,7 @@ public class ThreadPoolExecutorTest {
 
             });
 
-            if (threadIntervalTime > 0) {
-                Thread.sleep(threadIntervalTime);
-            }
+            Thread.sleep(threadIntervalTime);
         }
 
         System.in.read();
@@ -85,7 +95,9 @@ public class ThreadPoolExecutorTest {
         private static long ctlOffset;
         private static long corePoolSizeOffset;
         private static long maximumPoolSizeOffset;
+        private static long workersOffset;
         private static long workQueueOffset;
+        private static long completedTaskCountOffset;
 
         private final int monitorIntervalTime;
         private final ThreadPoolExecutor threadPool;
@@ -97,7 +109,9 @@ public class ThreadPoolExecutorTest {
                 ctlOffset = UnsafeHolder.unsafe.objectFieldOffset(ThreadPoolExecutor.class.getDeclaredField("ctl"));
                 corePoolSizeOffset = UnsafeHolder.unsafe.objectFieldOffset(ThreadPoolExecutor.class.getDeclaredField("corePoolSize"));
                 maximumPoolSizeOffset = UnsafeHolder.unsafe.objectFieldOffset(ThreadPoolExecutor.class.getDeclaredField("maximumPoolSize"));
+                workersOffset = UnsafeHolder.unsafe.objectFieldOffset(ThreadPoolExecutor.class.getDeclaredField("workers"));
                 workQueueOffset = UnsafeHolder.unsafe.objectFieldOffset(ThreadPoolExecutor.class.getDeclaredField("workQueue"));
+                completedTaskCountOffset = UnsafeHolder.unsafe.objectFieldOffset(ThreadPoolExecutor.class.getDeclaredField("completedTaskCount"));
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
             }
@@ -112,14 +126,54 @@ public class ThreadPoolExecutorTest {
 
         @Override
         public void run() {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             while (true) {
-                System.out.println("[" + getTime() + "]\tcorePoolSize " + corePoolSize + "\tmaximumPoolSize " + maximumPoolSize + "\tworkerCount " + getWorkerCount() + "\tworkQueueSize " + getWorkQueueSize());
                 try {
+                    int activeWorkerCount = 0;
+                    int completedTaskCount = UnsafeHolder.unsafe.getInt(threadPool, completedTaskCountOffset);
+                    Set<?> workers = (Set<?>) UnsafeHolder.unsafe.getObject(threadPool, workersOffset);
+                    for (Object worker : workers) {
+                        Field field = worker.getClass().getDeclaredField("completedTasks");
+                        field.setAccessible(true);
+                        completedTaskCount += field.getLong(worker);
+
+                        Method method = worker.getClass().getDeclaredMethod("isLocked");
+                        method.setAccessible(true);
+                        if ((Boolean) method.invoke(worker)) {
+                            activeWorkerCount++;
+                        }
+                    }
+
+                    StringBuilder out = new StringBuilder();
+                    out.append("[").append(getTime()).append("] corePoolSize ");
+                    out.append(fillBlank(corePoolSize));
+                    out.append(" maximumPoolSize ");
+                    out.append(fillBlank(maximumPoolSize));
+                    out.append(" workerCount ");
+                    out.append(fillBlank(getWorkerCount()));
+                    out.append(" activeWorkerCount ");
+                    out.append(fillBlank(activeWorkerCount));
+                    out.append(" workQueueSize ");
+                    out.append(fillBlank(getWorkQueueSize()));
+                    out.append(" completedTaskCount ");
+                    out.append(fillBlank(completedTaskCount));
+
+                    System.out.println(out.toString());
+
                     Thread.sleep(monitorIntervalTime);
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private static String fillBlank(int i) {
+            return i < 10 ? " " + i : String.valueOf(i);
         }
 
         private int getWorkerCount() {
