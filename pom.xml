@@ -17,7 +17,7 @@
             <artifactId>sa-jdi</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${JAVA_HOME}/lib/sa-jdi.jar</systemPath>
+            <systemPath>/Library/Java/JavaVirtualMachines/current.jdk/Contents/home/lib/sa-jdi.jar</systemPath>
         </dependency>
 
         <dependency>
