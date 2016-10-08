@@ -1,5 +1,7 @@
 package org.txazo.java.concurrency.thread;
 
+import java.io.IOException;
+
 /**
  * 线程状态
  * <pre>
@@ -61,5 +63,49 @@ public class ThreadStatusTest {
 //    LockSupport.parkNanos(timeout)或LockSupport.parkUntil(timeout)
 //    waiting on condition
 //    java.lang.Thread.State: TIMED_WAITING (parking)
+
+    public static void main(String[] args) throws IOException {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+            }
+
+        }, "NEW");
+
+        startThread(new Runnable() {
+
+            @Override
+            public void run() {
+                int i = 0;
+                for (; ; ) {
+                    i++;
+                }
+            }
+
+        }, "RUNNABLE");
+
+        startThread(new Runnable() {
+
+            @Override
+            public void run() {
+                Object lock = new Object();
+                synchronized (lock) {
+                    try {
+                        lock.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }, "BLOCKED");
+
+        System.in.read();
+    }
+
+    private static void startThread(Runnable runnable, String name) {
+        new Thread(runnable, name).start();
+    }
 
 }
