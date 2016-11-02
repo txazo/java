@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 堆内存溢出
  * <p>
- * VM Args: -server -verbose:gc -Xms20M -Xmx20M -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintCommandLineFlags
+ * VM Args: -server -verbose:gc -Xms20M -Xmx20M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/Users/txazo/heapdump -XX:+PrintCommandLineFlags
  * <p>
  * java.lang.OutOfMemoryError: Java heap space
  */
