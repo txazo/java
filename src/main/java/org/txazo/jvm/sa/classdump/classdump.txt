@@ -1,1 +1,0 @@
-sudo java -cp .:$JAVA_HOME/lib/sa-jdi.jar:java-1.0.jar -Dsun.jvm.hotspot.tools.jcore.filter=org.txazo.jvm.sa.classdump.ClassDumpFilter -Dsun.jvm.hotspot.tools.jcore.outputDir=/Users/txazo/test sun.jvm.hotspot.tools.jcore.ClassDump <pid>
