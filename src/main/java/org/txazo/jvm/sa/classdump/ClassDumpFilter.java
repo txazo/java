@@ -20,7 +20,6 @@ public class ClassDumpFilter implements ClassFilter {
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println(System.currentTimeMillis());
         System.in.read();
     }
 
