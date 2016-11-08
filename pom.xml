@@ -189,21 +189,28 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.1</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                        </manifest>
-                        <manifestEntries>
-                            <Premain-Class>
-                                org.txazo.jvm.object.SizeOfObject
-                            </Premain-Class>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
+
+                <!-- javaagent -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <finalName>javaagent</finalName>
+                            <includes>
+                                <include>org/txazo/jvm/agent/JavaAgent.java</include>
+                            </includes>
+                            <archive>
+                                <manifestEntries>
+                                    <Premain-Class>org.txazo.jvm.agent.JavaAgent</Premain-Class>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <!--<plugin>-->
