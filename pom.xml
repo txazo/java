@@ -16,6 +16,16 @@
     </properties>
 
     <dependencies>
+        <!-- tools.jar -->
+        <dependency>
+            <groupId>tools</groupId>
+            <artifactId>tools</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>/Library/Java/JavaVirtualMachines/current.jdk/Contents/home/lib/tools.jar</systemPath>
+        </dependency>
+
+        <!-- sa-jdi.jar -->
         <dependency>
             <groupId>sa-jdi</groupId>
             <artifactId>sa-jdi</artifactId>
@@ -185,13 +195,19 @@
                     <source>${jdk.compile.version}</source>
                     <target>${jdk.compile.version}</target>
                     <encoding>UTF-8</encoding>
+                    <!--<compilerArguments>-->
+                    <!--<verbose/>-->
+                    <!--<bootclasspath>${java.home}/lib/rt.jar:${java.home}/lib/jce.jar</bootclasspath>-->
+                    <!--</compilerArguments>-->
                 </configuration>
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
 
-                <!-- javaagent -->
+                <!-- agent-main.jar -->
                 <executions>
                     <execution>
                         <goals>
@@ -199,34 +215,19 @@
                         </goals>
                         <phase>package</phase>
                         <configuration>
-                            <finalName>javaagent</finalName>
+                            <finalName>agent-main</finalName>
                             <includes>
-                                <include>org/txazo/jvm/agent/JavaAgent.java</include>
+                                <include>org/txazo/jvm/attach/**</include>
                             </includes>
                             <archive>
                                 <manifestEntries>
-                                    <Premain-Class>org.txazo.jvm.agent.JavaAgent</Premain-Class>
+                                    <Agent-Class>org.txazo.jvm.attach.AttachTest</Agent-Class>
                                 </manifestEntries>
                             </archive>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-compiler-plugin</artifactId>-->
-            <!--<version>3.5.1</version>-->
-            <!--<configuration>-->
-            <!--<source>1.7</source>-->
-            <!--<target>1.7</target>-->
-            <!--<encoding>UTF-8</encoding>-->
-            <!--<compilerArguments>-->
-            <!--<verbose />-->
-            <!--<bootclasspath>${java.home}/lib/rt.jar:${java.home}/lib/jce.jar</bootclasspath>-->
-            <!--</compilerArguments>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 
