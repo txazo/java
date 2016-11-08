@@ -48,7 +48,9 @@ public class PsHeapPrint extends Tool {
     }
 
     public static void main(String[] args) {
-        new PsHeapPrint().execute(args);
+        PsHeapPrint print = new PsHeapPrint();
+        print.start(args);
+        print.stop();
     }
 
 }

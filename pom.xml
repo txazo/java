@@ -11,6 +11,10 @@
     <name>java</name>
     <url>https://github.com/txazo/java</url>
 
+    <properties>
+        <jdk.compile.version>1.7</jdk.compile.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>sa-jdi</groupId>
@@ -178,8 +182,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${jdk.compile.version}</source>
+                    <target>${jdk.compile.version}</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
