@@ -207,7 +207,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.6</version>
 
-                <!-- agent-main.jar -->
+                <!-- attach-agent.jar -->
                 <executions>
                     <execution>
                         <goals>
@@ -215,13 +215,13 @@
                         </goals>
                         <phase>package</phase>
                         <configuration>
-                            <finalName>agent-main</finalName>
+                            <finalName>attach-agent</finalName>
                             <includes>
                                 <include>org/txazo/jvm/attach/**</include>
                             </includes>
                             <archive>
                                 <manifestEntries>
-                                    <Agent-Class>org.txazo.jvm.attach.AttachTest</Agent-Class>
+                                    <Agent-Class>org.txazo.jvm.attach.AttachAgent</Agent-Class>
                                 </manifestEntries>
                             </archive>
                         </configuration>

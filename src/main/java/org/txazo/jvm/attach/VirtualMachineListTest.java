@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 列出系统的虚拟机进程, 类似jps
  */
-public class JpsTest {
+public class VirtualMachineListTest {
 
     public static void main(String[] args) {
         List<VirtualMachineDescriptor> vms = VirtualMachine.list();
