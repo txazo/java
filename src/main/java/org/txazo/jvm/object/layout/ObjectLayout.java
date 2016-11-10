@@ -30,7 +30,7 @@ public abstract class ObjectLayout {
         layout(new int[0]);
         layout(new int[1]);
         layout(new int[2]);
-        layout(new int[3]);
+        layout(new HashMap<>());
         System.in.read();
     }
 
