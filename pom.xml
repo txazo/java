@@ -238,11 +238,11 @@
                         <configuration>
                             <finalName>objectsize-agent</finalName>
                             <includes>
-                                <include>org/txazo/jvm/object/**</include>
+                                <include>org/txazo/jvm/object/size/**</include>
                             </includes>
                             <archive>
                                 <manifestEntries>
-                                    <Premain-Class>org.txazo.jvm.object.SizeOfObject</Premain-Class>
+                                    <Premain-Class>org.txazo.jvm.object.size.ObjectSize</Premain-Class>
                                 </manifestEntries>
                             </archive>
                         </configuration>

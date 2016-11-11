@@ -14,9 +14,17 @@ public class FieldOffset implements Comparable<FieldOffset> {
         this.field = field;
     }
 
+    public long getOffset() {
+        return offset;
+    }
+
+    public Field getField() {
+        return field;
+    }
+
     @Override
     public String toString() {
-        return offset + "\t\t" + field.getType().getSimpleName() + "\t\t" + classType.getSimpleName() + "." + field.getName();
+        return offset + "\t\t" + field.getName() + "\t\t" + field.getType().getSimpleName();
     }
 
     @Override

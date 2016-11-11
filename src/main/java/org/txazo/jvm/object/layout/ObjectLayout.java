@@ -1,40 +1,49 @@
 package org.txazo.jvm.object.layout;
 
-import org.txazo.jvm.object.SizeOfObject;
+import org.txazo.jvm.object.size.ObjectSize;
 import sun.misc.Unsafe;
 
-import java.io.IOException;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-/**
- * 64位系统
- * 对象头: 16字节, 开启指针压缩: 12字节
- * 基本数据类型: byte boolean char short int float long double
- * 引用类型: 8字节, 开启指针压缩: 4字节
- * 数组类型:
- * 对齐填充: 8字节对齐
- * 父类field优先
- */
 public abstract class ObjectLayout {
 
-    /**
-     * -XX:+UseCompressedOops -XX:-UseCompressedOops
-     * VM Args: -javaagent:/Users/txazo/TxazoProject/java/target/java-1.0.jar
-     */
-    public static void main(String[] args) throws IOException {
-        layout(new int[0]);
-        layout(new int[1]);
-        layout(new int[2]);
-        layout(new HashMap<>());
-        System.in.read();
+    private static final Map<Class, Integer> PrimaryTypeSize = new HashMap<Class, Integer>();
+
+    static {
+        PrimaryTypeSize.put(boolean.class, 1);
+        PrimaryTypeSize.put(byte.class, 1);
+        PrimaryTypeSize.put(char.class, 2);
+        PrimaryTypeSize.put(short.class, 2);
+        PrimaryTypeSize.put(int.class, 4);
+        PrimaryTypeSize.put(float.class, 4);
+        PrimaryTypeSize.put(long.class, 8);
+        PrimaryTypeSize.put(double.class, 8);
     }
 
-    public static void layout(Object obj) {
+    private static int sizeOf(Class<?> classType) {
+        Integer size = PrimaryTypeSize.get(classType);
+        return size != null ? size : ObjectSize.referenceSize();
+    }
+
+    public static void printLayout(Object obj) {
+        System.out.println("Class " + obj.getClass().getName());
+        System.out.println("0\t\t_mark");
+        System.out.println("8\t\t_metadata");
+
+        if (obj.getClass().isArray()) {
+            printArrayLayout(obj);
+        } else {
+            printObjectLayout(obj);
+        }
+
+        System.out.println(ObjectSize.sizeOf(obj) + "\t\ttotal");
+        System.out.println("");
+    }
+
+    private static void printObjectLayout(Object obj) {
         List<Field> instanceFields = getDeclaredField(obj.getClass());
         List<FieldOffset> fieldOffsets = new ArrayList<FieldOffset>();
         for (Field field : instanceFields) {
@@ -47,7 +56,32 @@ public abstract class ObjectLayout {
             System.out.println(fieldOffset);
         }
 
-        System.out.println(SizeOfObject.sizeOf(obj));
+        long size = ObjectSize.sizeOf(obj);
+        FieldOffset last = fieldOffsets.get(fieldOffsets.size() - 1);
+        int lastFieldSize = sizeOf(last.getField().getType());
+
+        if (size > last.getOffset() + lastFieldSize) {
+            System.out.println((last.getOffset() + lastFieldSize) + "\t\talign");
+        }
+    }
+
+    private static void printArrayLayout(Object array) {
+        int lengthSize = 4;
+        int baseOffset = UnsafeHolder.unsafe.arrayBaseOffset(array.getClass());
+        long size = ObjectSize.sizeOf(array);
+
+        System.out.println((baseOffset - lengthSize) + "\t\tlength");
+
+        Class<?> componentType = array.getClass().getComponentType();
+        int length = Array.getLength(array);
+        int componentSize = sizeOf(componentType);
+        for (int i = 0; i < length; i++) {
+            System.out.println((baseOffset + i * componentSize) + "\t\t[" + i + "]");
+        }
+
+        if (size > baseOffset + length * componentSize) {
+            System.out.println((baseOffset + length * componentSize) + "\t\talign");
+        }
     }
 
     private static List<Field> getDeclaredField(Class<?> classType) {
@@ -83,12 +117,6 @@ public abstract class ObjectLayout {
                 throw new Error(e);
             }
         }
-
-    }
-
-    private static class A {
-
-        private int[] i;
 
     }
 
