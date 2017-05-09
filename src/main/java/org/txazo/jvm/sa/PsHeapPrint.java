@@ -47,9 +47,10 @@ public class PsHeapPrint extends Tool {
         return size / 1024 + "k";
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         PsHeapPrint print = new PsHeapPrint();
-        print.start(args);
+        java.lang.reflect.Method start = PsHeapPrint.class.getDeclaredMethod("start", String[].class);
+        start.invoke(print, args);
         print.stop();
     }
 

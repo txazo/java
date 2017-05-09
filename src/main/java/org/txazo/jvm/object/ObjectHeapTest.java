@@ -27,9 +27,10 @@ public class ObjectHeapTest extends Tool {
     /**
      * sudo java -cp .:$JAVA_HOME/lib/sa-jdi.jar:java-1.0.jar org.txazo.jvm.object.ObjectHeapTest pid
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         ObjectHeapTest test = new ObjectHeapTest();
-        test.start(args);
+        java.lang.reflect.Method start = ObjectHeapTest.class.getDeclaredMethod("start", String[].class);
+        start.invoke(test, args);
         test.stop();
     }
 
