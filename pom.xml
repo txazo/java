@@ -12,7 +12,7 @@
     <url>https://github.com/txazo/java</url>
 
     <properties>
-        <jdk.compile.version>1.7</jdk.compile.version>
+        <jdk.compile.version>1.8</jdk.compile.version>
     </properties>
 
     <dependencies>

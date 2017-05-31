@@ -7,7 +7,7 @@ public class FileRemoveTool {
     private static final String[] SUFFIX = {".h", ".c", ".hpp", ".cpp"};
 
     public static void main(String[] args) {
-        removeFile(new File("/Users/txazo/TxazoProject/jdk7u"));
+        removeFile(new File("/Users/txazo/TxazoProject/hotspot"));
     }
 
     public static void removeFile(File parent) {
