@@ -13,6 +13,7 @@
 
     <properties>
         <jdk.compile.version>1.8</jdk.compile.version>
+        <hadoop.version>2.7.3</hadoop.version>
     </properties>
 
     <dependencies>
@@ -183,6 +184,31 @@
             <artifactId>httpmime</artifactId>
             <version>4.5.2</version>
         </dependency>
+
+        <!-- Hadoop -->
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>${hadoop.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-hdfs</artifactId>
+            <version>${hadoop.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-hdfs</artifactId>
+            <version>${hadoop.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>${hadoop.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -243,6 +269,26 @@
                             <archive>
                                 <manifestEntries>
                                     <Premain-Class>org.txazo.jvm.object.size.ObjectSize</Premain-Class>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </execution>
+
+                    <!-- wordcount.jar -->
+                    <execution>
+                        <id>wordcount</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <finalName>wordcount</finalName>
+                            <includes>
+                                <include>org/txazo/hadoop/wordcount/**</include>
+                            </includes>
+                            <archive>
+                                <manifestEntries>
+                                    <Main-Class>org.txazo.hadoop.wordcount.WordCount</Main-Class>
                                 </manifestEntries>
                             </archive>
                         </configuration>
