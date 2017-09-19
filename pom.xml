@@ -280,6 +280,27 @@
                         </configuration>
                     </execution>
 
+                    <!-- dynamic-bytecode-agent.jar -->
+                    <execution>
+                        <id>dynamic-bytecode-agent</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <finalName>dynamic-bytecode-agent</finalName>
+                            <includes>
+                                <include>org/txazo/jvm/instrument/**</include>
+                            </includes>
+                            <archive>
+                                <manifestEntries>
+                                    <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                                    <Premain-Class>org.txazo.jvm.instrument.DynamicBytecodeAgent</Premain-Class>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </execution>
+
                     <!-- wordcount.jar -->
                     <execution>
                         <id>wordcount</id>

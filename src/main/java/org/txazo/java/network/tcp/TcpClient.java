@@ -1,9 +1,6 @@
 package org.txazo.java.network.tcp;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.Socket;
 
 public class TcpClient {
@@ -13,7 +10,7 @@ public class TcpClient {
     private int port;
     private Socket socket;
     private BufferedReader input;
-    private PrintStream output;
+    private OutputStream os;
 
     public TcpClient(String host, int port) {
         this.host = host;
@@ -32,18 +29,21 @@ public class TcpClient {
 
             /** 获取输入输出流 */
             input = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-            output = new PrintStream(socket.getOutputStream(), true, "UTF-8");
 
-            output.println("connect");
+            os = socket.getOutputStream();
+            os.write("connect\\r\\n".getBytes());
+            os.flush();
 
             /** 发送接受数据 */
             while (isRunning) {
                 String data = input.readLine();
                 System.out.println(data);
                 if (data.equals("connect ok")) {
-                    output.println("send");
+                    os.write("send".getBytes());
+                    os.flush();
                 } else if (data.equals("reply")) {
-                    output.println("close");
+                    os.write("close".getBytes());
+                    os.flush();
                 } else if (data.equals("close ok")) {
                     isRunning = false;
                 }
@@ -53,7 +53,7 @@ public class TcpClient {
         } finally {
             /** 关闭连接 */
             try {
-                output.close();
+                os.close();
                 input.close();
                 socket.close();
             } catch (IOException e) {
