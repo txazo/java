@@ -3,4 +3,4 @@
 *.iml
 *.class
 .DS_Store
-org/
+/org
