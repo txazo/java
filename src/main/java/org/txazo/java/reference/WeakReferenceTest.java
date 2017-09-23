@@ -4,34 +4,29 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.lang.ref.ReferenceQueue;
-import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 
 /**
- * 软引用
+ * 弱引用
  *
- * @see java.lang.ref.SoftReference
+ * @see java.lang.ref.WeakReference
  */
-public class SoftReferenceTest {
+public class WeakReferenceTest {
 
-    /**
-     * 新生代20m, 老年代80m
-     *
-     * VM Args: -server -Xms100m -Xmx100m -XX:NewRatio=4
-     */
     @Test
-    public void test() {
+    public void test() throws Exception {
+        Entity entity = new Entity(50);
         ReferenceQueue<Entity> queue = new ReferenceQueue<>();
-        // 软引用对象40m
-        SoftReference<Entity> reference = new SoftReference<>(new Entity(40), queue);
+        WeakReference<Entity> reference = new WeakReference<>(entity, queue);
 
-        // 内存足够, 软引用对象不会被回收
-        System.gc();
         Assert.assertNotNull(reference.get());
         Assert.assertFalse(reference.isEnqueued());
         MemoryUtils.printHeapMemoryUsed();
 
-        // 50m, 老年代内存不够, 触发gc, 软引用对象被回收并enqueue
-        Entity newEntity = new Entity(50);
+        entity = null;
+        System.gc();
+        Thread.sleep(100);
+        // gc后, 弱引用对象被回收并enqueue
         Assert.assertNull(reference.get());
         Assert.assertTrue(reference.isEnqueued());
         MemoryUtils.printHeapMemoryUsed();

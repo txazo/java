@@ -3,7 +3,6 @@ package org.txazo.java.reference;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.lang.management.ManagementFactory;
 import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;
 
@@ -16,30 +15,28 @@ public class PhantomReferenceTest {
 
     @Test
     public void test() throws Exception {
-        Entity entity = new Entity();
         ReferenceQueue<Entity> queue = new ReferenceQueue<>();
-        PhantomReference reference = new PhantomReference(entity, queue);
-        Assert.assertFalse(reference.isEnqueued());
+        PhantomReference reference = new PhantomReference(new Entity(50), queue);
 
-        entity = null;
         System.gc();
         Thread.sleep(100);
+        // gc后, 虚引用对象enqueued, 但未被回收
         Assert.assertTrue(reference.isEnqueued());
-        System.out.println(getHeapMemoryUsage());
+        MemoryUtils.printHeapMemoryUsed();
 
-        queue.poll();
-        reference = null;
+        queue.remove();
         System.gc();
-        System.out.println(getHeapMemoryUsage());
-    }
-
-    private static long getHeapMemoryUsage() {
-        return ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed() >> 20;
+        Thread.sleep(100);
+        MemoryUtils.printHeapMemoryUsed();
     }
 
     private static class Entity {
 
-        private byte[] b = new byte[1024 * 1024 * 100];
+        private byte[] b;
+
+        public Entity(int size) {
+            this.b = new byte[1024 * 1024 * size];
+        }
 
     }
 
