@@ -16,9 +16,10 @@ public class WeakReferenceTest {
     @Test
     public void test() throws Exception {
         Entity entity = new Entity(50);
-        ReferenceQueue<Entity> queue = new ReferenceQueue<>();
-        WeakReference<Entity> reference = new WeakReference<>(entity, queue);
+        WeakReference<Entity> reference = new WeakReference<>(entity, new ReferenceQueue<>());
 
+        // entity被强引用, 不会被回收
+        System.gc();
         Assert.assertNotNull(reference.get());
         Assert.assertFalse(reference.isEnqueued());
         MemoryUtils.printHeapMemoryUsed();

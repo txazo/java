@@ -20,9 +20,8 @@ public class SoftReferenceTest {
      */
     @Test
     public void test() {
-        ReferenceQueue<Entity> queue = new ReferenceQueue<>();
         // 软引用对象40m
-        SoftReference<Entity> reference = new SoftReference<>(new Entity(40), queue);
+        SoftReference<Entity> reference = new SoftReference<>(new Entity(40), new ReferenceQueue<>());
 
         // 内存足够, 软引用对象不会被回收
         System.gc();

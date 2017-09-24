@@ -1,27 +1,18 @@
 package org.txazo.java.reference;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.lang.ref.WeakReference;
-
 /**
- * @author xztu
- * @date 2017-09-23
+ * 引用
+ *
+ * 子类
+ * --------------------------------------------------
+ * - SoftReference          软引用
+ * - WeakReference          弱引用
+ * - FinalReference         Final引用
+ * - PhantomReference       虚引用
+ * --------------------------------------------------
+ *
+ * @see java.lang.ref.Reference
+ * @see java.lang.ref.Reference.ReferenceHandler
  */
 public class ReferenceTest {
-
-    /**
-     * @see java.lang.ref.Reference.ReferenceHandler
-     */
-    @Test
-    public void test() {
-        Object obj = new Object();
-        WeakReference<Object> reference = new WeakReference<>(obj);
-        Assert.assertNotNull(reference.get());
-        obj = null;
-        System.gc();
-        Assert.assertNull(reference.get());
-    }
-
 }

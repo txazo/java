@@ -13,21 +13,40 @@ import java.lang.ref.ReferenceQueue;
  */
 public class PhantomReferenceTest {
 
-    @Test
+    /**
+     * 新生代20m, 老年代80m
+     *
+     * VM Args: -server -Xms100m -Xmx100m -XX:NewRatio=4
+     */
+    @Test(expected = OutOfMemoryError.class)
     public void test() throws Exception {
-        ReferenceQueue<Entity> queue = new ReferenceQueue<>();
-        PhantomReference reference = new PhantomReference(new Entity(50), queue);
+        Entity entity = new Entity(40);
+        ReferenceQueue queue = new ReferenceQueue<>();
+        PhantomReference reference = new PhantomReference(entity, queue);
 
         System.gc();
+        // PhantomReference.get()始终返回null
+        Assert.assertNull(reference.get());
+        Assert.assertFalse(reference.isEnqueued());
+        MemoryUtils.printHeapMemoryUsed();
+
+        entity = null;
+        System.gc();
         Thread.sleep(100);
-        // gc后, 虚引用对象enqueued, 但未被回收
+        // gc后, 虚引用对象enqueue, 但未被回收
         Assert.assertTrue(reference.isEnqueued());
         MemoryUtils.printHeapMemoryUsed();
 
-        queue.remove();
+        // 虚引用对象出队, gc后仍未被回收, 网上说此处会被回收, 被误导了
+        queue.poll();
         System.gc();
-        Thread.sleep(100);
+        Assert.assertFalse(reference.isEnqueued());
         MemoryUtils.printHeapMemoryUsed();
+
+        // 新分配50m内存, 老年代内存不够, 直接抛出OutOfMemoryError
+        entity = new Entity(50);
+
+        // 此处可见, PhantomReference中引用对象在gc时只会enqueue, 但占用的内存不会被回收
     }
 
     private static class Entity {
