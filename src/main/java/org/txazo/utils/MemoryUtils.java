@@ -1,4 +1,4 @@
-package org.txazo.java.reference;
+package org.txazo.utils;
 
 import sun.misc.SharedSecrets;
 
@@ -8,12 +8,12 @@ public abstract class MemoryUtils {
 
     public static void printHeapMemoryUsed() {
         long used = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed() >> 20;
-        System.out.println("Heap Memory used: " + used + "M");
+        System.err.println("Heap Memory used: " + used + "M");
     }
 
     public static void printDirectMemoryUsed() {
         long used = SharedSecrets.getJavaNioAccess().getDirectBufferPool().getMemoryUsed() >> 20;
-        System.out.println("Direct Memory used: " + used + "M");
+        System.err.println("Direct Memory used: " + used + "M");
     }
 
 }

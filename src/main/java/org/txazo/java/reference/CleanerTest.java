@@ -2,6 +2,7 @@ package org.txazo.java.reference;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.txazo.utils.MemoryUtils;
 import sun.misc.Cleaner;
 
 import java.nio.ByteBuffer;

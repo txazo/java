@@ -1,6 +1,7 @@
 package org.txazo.java.reference;
 
 import org.junit.Test;
+import org.txazo.utils.MemoryUtils;
 
 /**
  * f类: 重写Object的finalize()方法的类
