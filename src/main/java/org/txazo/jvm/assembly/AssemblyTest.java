@@ -5,7 +5,7 @@ package org.txazo.jvm.assembly;
  */
 public class AssemblyTest {
 
-    // VM Args: -XX:+UnlockDiagnosticVMOptions -XX:+PrintAssembly
+    // VM Args: -XX:+UnlockDiagnosticVMOptions -XX:+PrintAssembly -XX:+DebugNonSafepoints -XX:PrintAssemblyOptions=intel -XX:CompileCommand=compileonly,org/txazo/jvm/assembly/AssemblyTest::main
     public static void main(String[] args) {
         int a = 1;
         int b = 2;
