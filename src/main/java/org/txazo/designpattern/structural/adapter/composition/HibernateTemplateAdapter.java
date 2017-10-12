@@ -1,6 +1,5 @@
 package org.txazo.designpattern.structural.adapter.composition;
 
-
 import org.txazo.designpattern.structural.adapter.HibernateTemplate;
 import org.txazo.designpattern.structural.adapter.JdbcTemplate;
 

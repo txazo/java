@@ -25,7 +25,7 @@ public class OuterClass {
             @Override
             public void inner() {
                 field = localField;
-                // 问外部类成员变量和静态变量
+                // 访问外部类成员变量和静态变量
                 field = staticField;
                 // 访问外部类成员方法
                 getField();

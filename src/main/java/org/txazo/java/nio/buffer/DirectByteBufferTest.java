@@ -15,7 +15,6 @@ import java.nio.ByteBuffer;
  * -    内存        堆内存                 直接内存(减少一次I/O copy)
  * -    内存分配     稍快                   稍慢
  * -    I/O        效率低                  效率高
- * -    内存回收    gc回收                  full gc回收
  * ------------------------------------------------------------
  * 2) 直接内存分配和释放
  * -    分配      Unsafe.allocateMemory(size)     不受JVM限制
