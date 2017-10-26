@@ -5,11 +5,14 @@ package org.txazo.jvm.assembly;
  */
 public class AssemblyTest {
 
-    // VM Args: -XX:+UnlockDiagnosticVMOptions -XX:+PrintAssembly -XX:+DebugNonSafepoints -XX:PrintAssemblyOptions=intel -XX:CompileCommand=compileonly,org/txazo/jvm/assembly/AssemblyTest::main
+    // VM Args: -server -Xcomp -XX:+UnlockDiagnosticVMOptions -XX:+PrintAssembly -XX:+DebugNonSafepoints -XX:PrintAssemblyOptions=intel -XX:CompileCommand=compileonly,org/txazo/jvm/assembly/AssemblyTest::main
     public static void main(String[] args) {
-        int a = 1;
-        int b = 2;
-        int c = a + b;
+        Object a = new Object();
+        test(a);
+    }
+
+    private static Object test(Object b) {
+        return b;
     }
 
 }

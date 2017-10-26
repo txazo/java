@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
  * GBK: 英文一个字节, 中文两个字节, 向下兼容GB2312, 支持中文
  * UTF-8: 英文一个字节, 中文三个字节
  * UTF-16: 双字节
+ * UTF-32: 四字节
  */
 public class CharsetTest {
 
