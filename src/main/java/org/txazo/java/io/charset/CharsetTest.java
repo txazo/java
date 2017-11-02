@@ -6,15 +6,19 @@ import org.txazo.security.hex.HexUtils;
 import java.io.UnsupportedEncodingException;
 
 /**
- * 编码
- * <p>
+ * 1) 编码
+ *
  * ASCII: 单字节, 0x00 ~ 0x7f
  * ISO-8859-1: 单字节, 0x00 ~ 0xff, 向下兼容ASCII
- * GB2312: 英文一个字节, 中文两个字节, 支持中文
- * GBK: 英文一个字节, 中文两个字节, 向下兼容GB2312, 支持中文
+ * GB2312: 中文编码, 英文一个字节, 中文两个字节
+ * GBK: 中文编码, 英文一个字节, 中文两个字节, 向下兼容GB2312
  * UTF-8: 英文一个字节, 中文三个字节
  * UTF-16: 双字节
  * UTF-32: 四字节
+ *
+ * 2) 字符集
+ *
+ * Unicode: 两个字节, 每个字符对应一个唯一的Unicode编码
  */
 public class CharsetTest {
 
@@ -24,6 +28,7 @@ public class CharsetTest {
     private static final String Charset_GBK = "GBK";
     private static final String Charset_UTF_8 = "UTF-8";
     private static final String Charset_UTF_16 = "UTF-16";
+    private static final String Charset_UTF_32 = "UTF-32";
 
     @Test
     public void testCharset() throws UnsupportedEncodingException {
@@ -35,18 +40,20 @@ public class CharsetTest {
 
     @Test
     public void testChar() throws UnsupportedEncodingException {
-        String text = "I am 洲神";
+        String text = "I神";
 
-        // 49 20 61 6D 20 3F3F
+        // 49 3F
         printHex(text, Charset_ISO_8859_1);
-        // 49 20 61 6D 20 D6DE C9F1
+        // 49 C9F1
         printHex(text, Charset_GB2312);
-        // 49 20 61 6D 20 D6DE C9F1
+        // 49 C9F1
         printHex(text, Charset_GBK);
-        // 49 20 61 6D 20 E6B4B2 E7A59E
+        // 49 E7A59E
         printHex(text, Charset_UTF_8);
-        // 0049 0020 0061 006D 0020 6D32 795E
+        // FEFF00 47795E
         printHex(text, Charset_UTF_16);
+        // 0000000049 0000795E
+        printHex(text, Charset_UTF_32);
     }
 
     private void printHex(String text, String charset) throws UnsupportedEncodingException {
