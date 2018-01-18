@@ -11,7 +11,7 @@ import java.util.List;
 public class StopWatch {
 
     private long totalTimeMillis = 0L;
-    private List<TaskInfo> taskInfos = new ArrayList<TaskInfo>();
+    private List<TaskInfo> taskInfos = new ArrayList<>();
 
     public static StopWatch newInstance() {
         return new StopWatch();

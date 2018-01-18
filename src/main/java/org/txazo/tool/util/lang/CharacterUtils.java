@@ -9,7 +9,7 @@ import java.util.Set;
  */
 public abstract class CharacterUtils {
 
-    private static Set<Character.UnicodeBlock> chineseUBSet = new HashSet<Character.UnicodeBlock>();
+    private static Set<Character.UnicodeBlock> chineseUBSet = new HashSet<>();
 
     private static final Character.UnicodeBlock[] chineseUBs = new Character.UnicodeBlock[]{
             Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS,
@@ -24,6 +24,9 @@ public abstract class CharacterUtils {
         Collections.addAll(chineseUBSet, chineseUBs);
     }
 
+    /**
+     * 是否中文
+     */
     public static boolean isChinese(char c) {
         return chineseUBSet.contains(Character.UnicodeBlock.of(c));
     }

@@ -20,7 +20,7 @@ public class SerialGC {
     }
 
     public void test() throws Exception {
-        List<Holder> list = new ArrayList<Holder>();
+        List<Holder> list = new ArrayList<>();
         while (true) {
             list.add(new Holder());
             Thread.sleep(10);

@@ -20,7 +20,7 @@ public abstract class ResponseUtils {
     }
 
     public static String json(int code, String message, Map<String, Object> data) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("code", code);
         map.put("message", message);
         map.put("data", data);

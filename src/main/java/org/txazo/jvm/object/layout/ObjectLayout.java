@@ -10,7 +10,7 @@ import java.util.*;
 
 public abstract class ObjectLayout {
 
-    private static final Map<Class, Integer> PrimaryTypeSize = new HashMap<Class, Integer>();
+    private static final Map<Class, Integer> PrimaryTypeSize = new HashMap<>();
 
     static {
         PrimaryTypeSize.put(boolean.class, 1);
@@ -45,7 +45,7 @@ public abstract class ObjectLayout {
 
     private static void printObjectLayout(Object obj) {
         List<Field> instanceFields = getDeclaredField(obj.getClass());
-        List<FieldOffset> fieldOffsets = new ArrayList<FieldOffset>();
+        List<FieldOffset> fieldOffsets = new ArrayList<>();
         for (Field field : instanceFields) {
             fieldOffsets.add(getFieldOffset(field));
         }
@@ -85,7 +85,7 @@ public abstract class ObjectLayout {
     }
 
     private static List<Field> getDeclaredField(Class<?> classType) {
-        List<Field> instanceFields = new ArrayList<Field>();
+        List<Field> instanceFields = new ArrayList<>();
         Class<?> searchType = classType;
         while (Object.class != searchType && searchType != null) {
             Field[] fields = searchType.getDeclaredFields();

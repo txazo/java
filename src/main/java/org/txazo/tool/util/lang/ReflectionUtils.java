@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class ReflectionUtils {
 
-    private static final Map<Class<?>, Field[]> declaredFieldsCache = new ConcurrentHashMap<Class<?>, Field[]>(256);
+    private static final Map<Class<?>, Field[]> declaredFieldsCache = new ConcurrentHashMap<>(256);
 
     /**
      * 查找Field

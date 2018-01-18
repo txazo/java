@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class MessageDigestUtils {
 
-    private static final ConcurrentHashMap<String, MessageDigest> digestMap = new ConcurrentHashMap<String, MessageDigest>();
+    private static final ConcurrentHashMap<String, MessageDigest> digestMap = new ConcurrentHashMap<>();
 
     public static String digestHex(String algorithm, byte[] plainBytes) throws NoSuchAlgorithmException {
         return HexUtils.encodeHexString(digest(algorithm, plainBytes));

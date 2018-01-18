@@ -55,7 +55,7 @@ public class EmptyUtils {
     private static class EmptyArrayFactory {
 
         private static final ReentrantLock lock = new ReentrantLock();
-        private static Map<Class, Object> emptyArrays = new HashMap<Class, Object>();
+        private static Map<Class, Object> emptyArrays = new HashMap<>();
 
         public static <T> T[] getEmptyArray(Class<T> clazz) {
             T[] tArray = (T[]) emptyArrays.get(clazz);
@@ -82,7 +82,7 @@ public class EmptyUtils {
 
         private static EmptyObjectProxy emptyObjectProxy = new EmptyObjectProxy();
         private static final ReentrantLock lock = new ReentrantLock();
-        private static Map<Class, Object> emptyObjects = new HashMap<Class, Object>();
+        private static Map<Class, Object> emptyObjects = new HashMap<>();
 
         public static <T> T getEmptyObject(Class<T> clazz) {
             T t = (T) emptyObjects.get(clazz);

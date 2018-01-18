@@ -16,7 +16,7 @@ public class ForEachTest {
     @Test
     public void test() {
         int number = 0;
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> list = new ArrayList<>();
         for (Integer i : list) {
             number = i;
         }

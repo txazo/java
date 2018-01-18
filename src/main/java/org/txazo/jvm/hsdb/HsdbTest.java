@@ -8,7 +8,7 @@ public class HsdbTest {
 
     public static void main(String[] args) throws IOException {
         GroupList groupList = new GroupList();
-        List<Group> groups = new ArrayList<Group>();
+        List<Group> groups = new ArrayList<>();
         groups.add(new Group(1, "group 1"));
         groups.add(new Group(2, "group 2"));
         groupList.setGroups(groups);

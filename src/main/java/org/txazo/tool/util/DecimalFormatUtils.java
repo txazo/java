@@ -21,7 +21,7 @@ public abstract class DecimalFormatUtils {
 
     private static class DecimalFormatWrapper {
 
-        private ConcurrentMap<String, DecimalFormat> decimalFormatMap = new ConcurrentHashMap<String, DecimalFormat>();
+        private ConcurrentMap<String, DecimalFormat> decimalFormatMap = new ConcurrentHashMap<>();
 
         public String format(String pattern, double number) {
             return getDecimalFormat(pattern).format(number);

@@ -37,7 +37,7 @@ public abstract class CronUtils {
 
         Date current = new Date();
         Date next = null;
-        List<Date> dateList = new ArrayList<Date>();
+        List<Date> dateList = new ArrayList<>();
         while (size-- > 0) {
             next = cronExpression.getNextValidTimeAfter(current);
             if (next == null) {

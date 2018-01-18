@@ -16,7 +16,7 @@ public class GenericSugar {
 
     @Test
     public void test() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add("generic");
         String name = list.get(0);
     }

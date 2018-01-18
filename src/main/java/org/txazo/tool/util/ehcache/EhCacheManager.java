@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class EhCacheManager {
 
-    private Map<String, EhCache> ehCacheMap = new HashMap<String, EhCache>();
+    private Map<String, EhCache> ehCacheMap = new HashMap<>();
 
     private CacheManager cacheManager;
 

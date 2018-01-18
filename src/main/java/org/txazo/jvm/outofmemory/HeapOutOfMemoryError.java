@@ -13,7 +13,7 @@ import java.util.List;
 public class HeapOutOfMemoryError {
 
     public static void main(String[] args) {
-        List<byte[]> bytes = new ArrayList<byte[]>();
+        List<byte[]> bytes = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             bytes.add(new byte[1024 * 1024]);
         }

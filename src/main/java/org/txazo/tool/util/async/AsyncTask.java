@@ -11,7 +11,7 @@ public class AsyncTask {
 
     private static final ExecutorService taskPool = new ThreadPoolExecutor(50, 50, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(500));
 
-    private Map<String, Future> futureMap = new HashMap<String, Future>();
+    private Map<String, Future> futureMap = new HashMap<>();
 
     public void submit(TaskConfig config, Callable<?> task) {
         futureMap.put(config.getId(), taskPool.submit(task));

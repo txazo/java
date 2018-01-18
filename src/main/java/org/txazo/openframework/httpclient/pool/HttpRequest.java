@@ -34,7 +34,7 @@ public class HttpRequest extends HttpPost {
     }
 
     private static HttpEntity buildFormEntity(Map<String, Object> params) throws UnsupportedEncodingException {
-        List<NameValuePair> formParams = new ArrayList<NameValuePair>();
+        List<NameValuePair> formParams = new ArrayList<>();
         if (MapUtils.isNotEmpty(params)) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
                 if (StringUtils.isBlank(entry.getKey())) {

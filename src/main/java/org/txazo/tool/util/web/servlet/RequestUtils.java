@@ -22,7 +22,7 @@ public abstract class RequestUtils {
 
     public static String getRequestURL(HttpServletRequest request, String... excludeParams) {
         String url = request.getRequestURL().toString();
-        Set<String> excludeParamSet = new HashSet<String>();
+        Set<String> excludeParamSet = new HashSet<>();
         if (ArrayUtils.isNotEmpty(excludeParams)) {
             Collections.addAll(excludeParamSet, excludeParams);
         }

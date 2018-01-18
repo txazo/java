@@ -30,7 +30,7 @@ public class PoolingHttpClient implements HttpClient {
     // 请求阻塞队列
     private final BlockingQueue<HttpRequest> requestQueue;
     // 工作线程
-    private final List<HttpWorker> workers = new ArrayList<HttpWorker>();
+    private final List<HttpWorker> workers = new ArrayList<>();
 
     private PoolingHttpClient(int workSize, int queueSize, int retryCount) {
         this(workSize, queueSize, retryCount, DEFAULT_REQUEST_CONFIG);
@@ -51,7 +51,7 @@ public class PoolingHttpClient implements HttpClient {
                 .setRetryHandler(new DefaultHttpRequestRetryHandler(retryCount))
                 .build();
 
-        requestQueue = new LinkedBlockingDeque<HttpRequest>(queueSize);
+        requestQueue = new LinkedBlockingDeque<>(queueSize);
 
         for (int i = 0; i < workSize; i++) {
             HttpWorker worker = new HttpWorker("http-worker-" + i);

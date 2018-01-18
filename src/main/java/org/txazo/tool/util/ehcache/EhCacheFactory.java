@@ -11,7 +11,7 @@ import java.util.Map;
 public abstract class EhCacheFactory {
 
     private static final String DEFAULT_EHCACHE_CONFIG = "ehcache.xml";
-    private static Map<String, EhCacheManager> ehCacheManagerMap = new HashMap<String, EhCacheManager>();
+    private static Map<String, EhCacheManager> ehCacheManagerMap = new HashMap<>();
 
     public static EhCacheManager getEhCacheManager() {
         return getEhCacheManager(DEFAULT_EHCACHE_CONFIG);
