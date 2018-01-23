@@ -35,6 +35,15 @@
             <systemPath>/Library/Java/JavaVirtualMachines/current.jdk/Contents/home/lib/sa-jdi.jar</systemPath>
         </dependency>
 
+        <!-- sa-jdi.jar -->
+        <dependency>
+            <groupId>anno-process</groupId>
+            <artifactId>anno-process</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/anno-process.jar</systemPath>
+        </dependency>
+
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>

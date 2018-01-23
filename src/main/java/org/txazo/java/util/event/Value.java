@@ -6,7 +6,7 @@ import java.util.Set;
 public class Value {
 
     private Object value;
-    private Set<ValueEventListener> valueEventListeners = new HashSet<ValueEventListener>();
+    private Set<ValueEventListener> valueEventListeners = new HashSet<>();
 
     public Value(Object value) {
         this.value = value;

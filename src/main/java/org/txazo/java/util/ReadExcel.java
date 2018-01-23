@@ -18,9 +18,9 @@ import java.util.Map;
 public class ReadExcel {
 
     private static final String URL = "http://appkit.dper.com/elecontent/cus/addContent.html";
-    private static final Map<String, Integer> cellFields = new HashMap<String, Integer>();
-    private static final Map<String, String> tagMap = new HashMap<String, String>();
-    private static final Map<String, String> typeMap = new HashMap<String, String>();
+    private static final Map<String, Integer> cellFields = new HashMap<>();
+    private static final Map<String, String> tagMap = new HashMap<>();
+    private static final Map<String, String> typeMap = new HashMap<>();
 
     static {
         cellFields.put("tasteTag", 3);
@@ -48,7 +48,7 @@ public class ReadExcel {
         Workbook wb = WorkbookFactory.create(new FileInputStream("/Users/txazo/Desktop/data_05-13.xlsx"));
         Sheet sheet = wb.getSheetAt(0);
 
-        List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> list = new ArrayList<>();
 
         for (int i = startRow; i <= endRow; i++) {
             list.add(getContent(sheet.getRow(i)));
@@ -62,7 +62,7 @@ public class ReadExcel {
     }
 
     private static Map<String, String> getContent(Row row) {
-        Map<String, String> data = new HashMap<String, String>();
+        Map<String, String> data = new HashMap<>();
         for (Map.Entry<String, Integer> entry : cellFields.entrySet()) {
             data.put(entry.getKey(), getCellValue(row, entry.getValue()));
             if (entry.getKey().equals("tasteTag")) {
