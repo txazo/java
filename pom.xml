@@ -233,6 +233,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
+                    <compilerArgument>-parameters</compilerArgument>
                     <source>${jdk.compile.version}</source>
                     <target>${jdk.compile.version}</target>
                     <encoding>UTF-8</encoding>
