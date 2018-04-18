@@ -2,7 +2,7 @@ package org.txazo.java.concurrency.exector.future;
 
 import org.junit.Test;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.*;
 
 public class CompletableFutureTest {
 
@@ -36,6 +36,12 @@ public class CompletableFutureTest {
         );
         future.join();
         System.out.println("Task Complete");
+    }
+
+    @Test
+    public void test1() {
+        ExecutorService executor = new ThreadPoolExecutor(10, 20, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>(1000));
+        CompletableFuture.runAsync(() -> System.out.println("Test"), executor).join();
     }
 
 }

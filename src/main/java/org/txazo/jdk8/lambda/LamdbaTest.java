@@ -1,4 +1,4 @@
-package org.txazo.java.lambda;
+package org.txazo.jdk8.lambda;
 
 import org.junit.Assert;
 import org.junit.Test;
