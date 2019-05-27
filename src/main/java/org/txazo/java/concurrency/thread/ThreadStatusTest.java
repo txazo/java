@@ -1,6 +1,7 @@
 package org.txazo.java.concurrency.thread;
 
 import java.io.IOException;
+import java.util.concurrent.locks.LockSupport;
 
 /**
  * 线程状态
@@ -64,48 +65,145 @@ public class ThreadStatusTest {
 //    waiting on condition
 //    java.lang.Thread.State: TIMED_WAITING (parking)
 
-    public static void main(String[] args) throws IOException {
-        new Thread(new Runnable() {
+    public static void main(String[] args) throws IOException, InterruptedException {
+//        new Thread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//            }
+//
+//        }, "NEW");
 
-            @Override
-            public void run() {
-            }
+//        for (int i = 0; i < 8; i++) {
+//            startThread(new Runnable() {
+//
+//                @Override
+//                public void run() {
+//                    int i = 0;
+//                    for (; ; ) {
+//                        i++;
+//                    }
+//                }
+//
+//            }, "RUNNABLE " + i);
+//        }
 
-        }, "NEW");
+//        Thread t = startThread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                synchronized (this) {
+//                    System.out.println("This is a BLOCKED Thread");
+//                }
+//            }
+//
+//        }, "BLOCKED");
+//
+//        synchronized (t) {
+//            Thread.sleep(10000000);
+//        }
+
+//        Thread t = startThread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                Object lock = new Object();
+//                synchronized (lock) {
+//                    try {
+//                        lock.wait();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//        }, "WAITING 1");
+//
+//        startThread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                try {
+//                    t.join();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//        }, "WAITING 2");
+//
+//        startThread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                LockSupport.park(this);
+//            }
+//
+//        }, "WAITING 3");
 
         startThread(new Runnable() {
 
             @Override
             public void run() {
-                int i = 0;
-                for (; ; ) {
-                    i++;
+                try {
+                    Thread.sleep(100000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
 
-        }, "RUNNABLE");
+        }, "TIMED_WAITING 1");
 
-        startThread(new Runnable() {
+                Thread t = startThread(new Runnable() {
 
             @Override
             public void run() {
                 Object lock = new Object();
                 synchronized (lock) {
                     try {
-                        lock.wait();
+                        lock.wait(100000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
 
-        }, "BLOCKED");
+        }, "TIMED_WAITING 2");
+
+        startThread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    t.join(100000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }, "TIMED_WAITING 3");
+
+        startThread(new Runnable() {
+
+            @Override
+            public void run() {
+                LockSupport.parkUntil(this,System.currentTimeMillis() + 100000);
+            }
+
+        }, "TIMED_WAITING 4");
 
         System.in.read();
     }
 
-    private static void startThread(Runnable runnable, String name) {
-        new Thread(runnable, name).start();
+    private static Thread startThread(Runnable runnable, String name) {
+        Thread t = new Thread(runnable, name);
+        t.start();
+        return t;
     }
 
 }
