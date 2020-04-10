@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="test">
+
+    <insert id="batchInsert">
+        insert into message_${shardId}(user_id, template_id, params, message_type, type, send_time)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId},#{item.templateId},#{item.params},#{item.messageType},#{item.type},#{item.sendTime})
+        </foreach>
+    </insert>
+
+    <select id="list" resultType="int">
+        select template_id from message_${shardId}
+        where user_id = #{userId}
+        and template_id IN
+        <foreach collection="templateIds" separator="," open="(" close=")" item="templateId">
+            #{templateId}
+        </foreach>
+    </select>
+
+</mapper>
