@@ -12,7 +12,7 @@ import java.util.List;
 public class FullGCTest {
 
     /**
-     * VM Args: -server -Xms200m -Xmx200m -XX:NewRatio=1 -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=3 -XX:PretenureSizeThreshold=20971520 -XX:+PrintGCDetails
+     * VM Args: -server -Xms200m -Xmx200m -XX:NewRatio=1 -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=3 -XX:PretenureSizeThreshold=20971520 -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCDateStamps  -XX:+PrintGCTimeStamps
      */
     public static void main(String[] args) throws Exception {
         List<Entity> entities = new ArrayList<>();
@@ -21,7 +21,7 @@ public class FullGCTest {
             new Entity(1);
             entities.add(new Entity(1));
             Thread.sleep(100);
-            MemoryUtils.printHeapMemoryUsed();
+            MemoryUtils.printHeapMemoryDetail();
         }
     }
 
