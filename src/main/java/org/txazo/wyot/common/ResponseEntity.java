@@ -1,6 +1,6 @@
 package org.txazo.wyot.common;
 
-import org.txazo.java.annotation.processing.Data;
+import lombok.Data;
 
 import java.io.Serializable;
 
