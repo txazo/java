@@ -1,0 +1,12 @@
+server:
+  port: 10100
+eureka:
+  instance:
+    hostname: eureka1.shot.com
+  client:
+    service-url:
+      defaultZone: http://eureka1.shot.com:10101/eureka/,http://eureka2.shot.com:10101/eureka/
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 5000
+    use-read-only-response-cache: false
