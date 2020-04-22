@@ -25,7 +25,7 @@ public class PooledHttpClient {
 
     private PooledHttpClient(int fixedSize, int timeout) {
         threadPool = new ThreadPoolExecutor(fixedSize, fixedSize, 0L, TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<Runnable>(1000), Executors.defaultThreadFactory());
+                new ArrayBlockingQueue<>(1000), Executors.defaultThreadFactory());
 
         PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
         connectionManager.setMaxTotal(200);
